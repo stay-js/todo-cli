@@ -1,4 +1,4 @@
-use super::Todo;
+use super::todo::Todo;
 
 pub fn get_todos() -> Vec<Todo> {
     let json = std::fs::read_to_string("todos.json").unwrap_or("[]".to_string());

@@ -1,5 +1,4 @@
-use super::Todo;
-
+use super::todo::Todo;
 use dialoguer::{theme::ColorfulTheme, Select};
 
 pub enum Selection {

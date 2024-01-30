@@ -1,9 +1,9 @@
 use lib::{
-    add_todo::add_todo,
     get_todos::get_todos,
-    handle_todo::handle_todo,
+    handle_todo::HandleTodo,
+    save_to_file::SaveToFile,
     select_action::{select_action, Selection},
-    SaveToFile,
+    todo::Todo,
 };
 
 fn main() {
@@ -14,12 +14,12 @@ fn main() {
 
         match select_action(&todos) {
             Selection::Ignore => (),
-            Selection::Add => add_todo(&mut todos),
+            Selection::Add => todos.push(Todo::new()),
             Selection::Exit => {
                 todos.save_to_file();
                 break;
             }
-            Selection::Todo(index) => handle_todo(&mut todos, index),
+            Selection::Todo(index) => todos.handle_todo(index),
         }
     }
 }
