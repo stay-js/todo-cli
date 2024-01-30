@@ -11,16 +11,10 @@ pub enum Selection {
 pub fn select_action(todos: &Vec<Todo>) -> Selection {
     let mut select_from = todos
         .iter()
-        .map(|todo| {
-            if todo.completed {
-                return format!("{} - ✅", todo.title);
-            }
-
-            return todo.title.clone();
-        })
+        .map(|todo| todo.get_formatted_title())
         .collect::<Vec<_>>();
 
-    select_from.extend([String::from("Add"), String::from("Exit")]);
+    select_from.extend(["Add", "Exit"]);
 
     let selection = Select::with_theme(&ColorfulTheme::default())
         .items(&select_from)

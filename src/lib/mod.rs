@@ -8,13 +8,21 @@ use serde_json;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Todo {
-    pub title: String,
+    pub title: &'static str,
     pub completed: bool,
 }
 
 impl Todo {
     fn toggle_status(&mut self) {
         self.completed = !self.completed;
+    }
+
+    fn get_formatted_title(&self) -> &'static str {
+        if self.completed {
+            return format!("{} - ✅", self.title).as_str();
+        }
+
+        return self.title;
     }
 }
 
