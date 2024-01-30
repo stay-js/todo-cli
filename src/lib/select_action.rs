@@ -1,34 +1,39 @@
+use super::Todo;
+
 use dialoguer::{theme::ColorfulTheme, Select};
 
-pub enum Action {
+pub enum Selection {
     Add,
-    Remove,
     Exit,
+    Todo(usize),
 }
 
-pub fn select_action(number_of_todos: usize) -> Action {
-    let selection = Select::with_theme(&ColorfulTheme::default())
-        .with_prompt("Select action:")
-        .items(if number_of_todos == 0 {
-            &["Add", "Exit"]
-        } else {
-            &["Add", "Remove", "Exit"]
-        })
-        .interact()
-        .expect("Failed to select action");
+pub fn select_action(todos: &Vec<Todo>) -> Selection {
+    let mut select_from = todos
+        .iter()
+        .map(|todo| {
+            if todo.completed {
+                return format!("{} - ✅", todo.title);
+            }
 
-    if number_of_todos == 0 {
-        return match selection {
-            0 => Action::Add,
-            1 => Action::Exit,
-            _ => panic!("Invalid selection"),
-        };
+            return todo.title.clone();
+        })
+        .collect::<Vec<_>>();
+
+    select_from.extend([String::from("Add"), String::from("Exit")]);
+
+    let selection = Select::with_theme(&ColorfulTheme::default())
+        .items(&select_from)
+        .interact()
+        .expect("Failed to select todo");
+
+    if selection == select_from.len() - 1 {
+        return Selection::Exit;
     }
 
-    return match selection {
-        0 => Action::Add,
-        1 => Action::Remove,
-        2 => Action::Exit,
-        _ => panic!("Invalid selection"),
-    };
+    if selection == select_from.len() - 2 {
+        return Selection::Add;
+    }
+
+    return Selection::Todo(selection);
 }
