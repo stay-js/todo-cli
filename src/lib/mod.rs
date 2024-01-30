@@ -26,12 +26,12 @@ impl Todo {
     }
 }
 
-pub trait Save {
-    fn save(&self);
+pub trait SaveToFile {
+    fn save_to_file(&self);
 }
 
-impl Save for Vec<Todo> {
-    fn save(&self) {
+impl SaveToFile for Vec<Todo> {
+    fn save_to_file(&self) {
         let json_string = serde_json::to_string(&self).expect("Failed to serialize todos");
         std::fs::write("todos.json", json_string).expect("Failed to write to file");
     }

@@ -3,7 +3,7 @@ use super::Todo;
 use dialoguer::{theme::ColorfulTheme, Input};
 
 pub fn add_todo(todos: &mut Vec<Todo>) {
-    let todo: String = Input::with_theme(&ColorfulTheme::default())
+    let todo = Input::with_theme(&ColorfulTheme::default())
         .with_prompt("Add todo:")
         .interact_text()
         .expect("Failed to read input");

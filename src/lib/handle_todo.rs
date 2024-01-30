@@ -9,7 +9,7 @@ pub fn handle_todo(todos: &mut Vec<Todo>, index: usize) {
         .with_prompt("Select action:")
         .items(&[
             if todo.completed {
-                "Mark as uncomplete"
+                "Mark as uncompleted"
             } else {
                 "Mark as completed"
             },
@@ -19,9 +19,9 @@ pub fn handle_todo(todos: &mut Vec<Todo>, index: usize) {
         .interact()
         .expect("Failed to select action");
 
-    if action == 0 {
-        todo.toggle_status();
-    } else if action == 1 {
-        todos.remove(index);
+    match action {
+        0 => todo.toggle_status(),
+        1 => drop(todos.remove(index)),
+        _ => (),
     }
 }

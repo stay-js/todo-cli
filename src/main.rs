@@ -3,7 +3,7 @@ use lib::{
     get_todos::get_todos,
     handle_todo::handle_todo,
     select_action::{select_action, Selection},
-    Save,
+    SaveToFile,
 };
 
 fn main() {
@@ -16,11 +16,9 @@ fn main() {
 
         todos.sort_by(|a, b| a.completed.cmp(&b.completed));
 
-        let selection = select_action(&todos);
-
-        match selection {
+        match select_action(&todos) {
             Selection::Exit => {
-                todos.save();
+                todos.save_to_file();
                 break;
             }
             Selection::Add => add_todo(&mut todos),
