@@ -14,7 +14,7 @@ pub fn select_action(todos: &Vec<Todo>) -> Selection {
         .map(|todo| todo.get_formatted_title())
         .collect::<Vec<_>>();
 
-    select_from.extend(["Add", "Exit"]);
+    select_from.extend(["Add".to_string(), "Exit".to_string()]);
 
     let selection = Select::with_theme(&ColorfulTheme::default())
         .items(&select_from)
